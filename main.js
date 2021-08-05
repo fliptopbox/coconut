@@ -19,6 +19,7 @@ function scrub(n = 0) {
 }
 
 function initialize() {
+  document.querySelector(".loading").style.display = "none";
   sequence.classList.remove("hidden");
   render(0);
 }
@@ -26,10 +27,9 @@ function initialize() {
 function handleMouse (e) {
   const { screenX } = e;
   const { innerWidth } = window;
-  const ratio = screenX / window.innerWidth;
-
-  const i = ratio - 0.5 > 0 ? 1 : -1;
+  const ratio = screenX / innerWidth;
   const frame = (ratio * 72) >> 0;
+
   render(frame);
 }
 
