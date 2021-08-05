@@ -3,8 +3,9 @@ const frames = [...Array(72)].map(path).map(load);
 
 function done(src) {
   loaded += 1;
-  console.log("[%s] loaded [%s]", loaded, src);
-  if (loaded >= frames.length) window.postMessage("present");
+  // console.log("[%s] loaded [%s]", loaded, src);
+  window.postMessage({ progress: loaded / frames.length });
+  if (loaded >= frames.length) window.postMessage({ finished: true });
 }
 
 function load(src) {

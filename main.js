@@ -2,7 +2,7 @@ import frames from "./js/frames.js";
 
 const sequence = document.querySelector("#sequence");
 async function render(n) {
-    const image = frames[n];
+  const image = frames[n];
   if (!image || !image.src) return;
   sequence.src = image.src;
 }
@@ -18,13 +18,25 @@ function scrub(n = 0) {
   render(current);
 }
 
-function initialize() {
-  document.querySelector(".loading").style.display = "none";
-  sequence.classList.remove("hidden");
-  render(0);
+const $progress = document.querySelector(".progress");
+function initialize(e) {
+  const { data } = e;
+  const { progress = null } = data;
+
+  if (progress && typeof progress === "number") {
+    $progress.style.width = progress * 100 + "%";
+  }
+
+  if (progress && progress < 1) return;
+
+  setTimeout(() => {
+    document.querySelector(".loading").style.display = "none";
+    sequence.classList.remove("hidden");
+    render(0);
+  }, 150);
 }
 
-function handleMouse (e) {
+function handleMouse(e) {
   const { screenX } = e;
   const { innerWidth } = window;
   const ratio = screenX / innerWidth;
